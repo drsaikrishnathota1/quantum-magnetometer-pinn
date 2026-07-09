@@ -1,0 +1,22 @@
+Verified reference report
+Allowed journals: Results in Physics; Quantum Science and Technology
+Date range: 2023-present
+ArXiv: excluded
+
+## References
+
+[1] J. Jeon, Y. Kim, Y. Ito, N. Sugita, and M. Mitsuishi, “One-frame interferometric surface contouring via stepwise phase extraction and deep learning,” Results in Physics, vol. 80, Article 108560, 2026. doi:10.1016/j.rinp.2025.108560.
+
+[2] G. Ramasekhar et al., “Machine learning approach for predicting heat and mass transfer in Maxwell–Sutterby fluid flow over a Riga plate geometry via Levenberg–Marquardt backpropagation neural network algorithm: Influence of Joule heating and activation energy,” Results in Physics, vol. 80, Article 108528, 2026. doi:10.1016/j.rinp.2025.108528.
+
+[3] B. Roumi and V. Fallahi, “Tunable dual-phase TMOKE sensor in a Weyl semimetal–plasmonic waveguide,” Results in Physics, vol. 80, Article 108571, 2026. doi:10.1016/j.rinp.2025.108571.
+
+[4] A. Hamann, P. Aigner, W. Dür, P. Sekatski, “Selective and noise-resilient wave estimation with quantum sensor networks,” Quantum Science and Technology, vol. 10, no. 3, Article 035028, 2025. doi:10.1088/2058-9565/add61b.
+
+[5] I. Jauch, T. Strohm, T. Fuchs, F. Jelezko, “Quantum magnetometry enhanced by machine learning,” Quantum Science and Technology, vol. 11, no. 1, Article 015055, 2026. doi:10.1088/2058-9565/ae3acf.
+
+[6] M. Mezzadri, L. Lepori, A. Chiesa, S. Carretta, “Dephasing-tolerant quantum sensing for transverse magnetic fields with spin qudits,” Quantum Science and Technology, vol. 10, no. 1, Article 015045, 2025. doi:10.1088/2058-9565/ad985e.
+
+[7] V. Cimini, E. Polino, M. Valeri, N. Spagnolo et al., “Benchmarking Bayesian quantum estimation,” Quantum Science and Technology, vol. 9, no. 3, Article 035035, 2024. doi:10.1088/2058-9565/ad48b3.
+
+[8] E. L. André, J. Bavaresco, M. Mehboudi, “Strategy optimization for Bayesian quantum parameter estimation with finite copies: Adaptive greedy, parallel, sequential, and general strategies,” Quantum Science and Technology, 2026. doi:10.1088/2058-9565/ae846c.

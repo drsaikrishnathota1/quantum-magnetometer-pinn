@@ -69,3 +69,12 @@ The simulation code, trained-recovery outputs, result tables, and generated figu
 
 [3] B. Roumi and V. Fallahi, “Tunable dual-phase TMOKE sensor in a Weyl semimetal–plasmonic waveguide,” Results in Physics, vol. 80, Article 108571, 2026. doi:10.1016/j.rinp.2025.108571.
 
+[4] A. Hamann, P. Aigner, W. Dür, P. Sekatski, “Selective and noise-resilient wave estimation with quantum sensor networks,” Quantum Science and Technology, vol. 10, no. 3, Article 035028, 2025. doi:10.1088/2058-9565/add61b.
+
+[5] I. Jauch, T. Strohm, T. Fuchs, F. Jelezko, “Quantum magnetometry enhanced by machine learning,” Quantum Science and Technology, vol. 11, no. 1, Article 015055, 2026. doi:10.1088/2058-9565/ae3acf.
+
+[6] M. Mezzadri, L. Lepori, A. Chiesa, S. Carretta, “Dephasing-tolerant quantum sensing for transverse magnetic fields with spin qudits,” Quantum Science and Technology, vol. 10, no. 1, Article 015045, 2025. doi:10.1088/2058-9565/ad985e.
+
+[7] V. Cimini, E. Polino, M. Valeri, N. Spagnolo et al., “Benchmarking Bayesian quantum estimation,” Quantum Science and Technology, vol. 9, no. 3, Article 035035, 2024. doi:10.1088/2058-9565/ad48b3.
+
+[8] E. L. André, J. Bavaresco, M. Mehboudi, “Strategy optimization for Bayesian quantum parameter estimation with finite copies: Adaptive greedy, parallel, sequential, and general strategies,” Quantum Science and Technology, 2026. doi:10.1088/2058-9565/ae846c.
