@@ -30,7 +30,7 @@ where \(B(t)\) is the hidden magnetic field and \(\gamma\) is the normalized gyr
 P(t) = \frac{1}{2}\left[1 - C e^{-t/T_2^*}\cos(\phi(t))\right],
 \]
 
-where \(C\) is the measurement contrast and \(T_2^*\) is the dephasing time. Noisy measurements are generated using finite-shot binomial sampling and additive readout noise. The computational experiment used 4096 normalized samples, \(C = 0.86\), \(T_2^* = 60.0\), shot count \(N_s = 256\), normalized gyromagnetic coefficient \(\gamma = 2.0\), time step \(\Delta t = 0.01\), and an Ornstein–Uhlenbeck disturbance with \(	heta = 1.35\) and \(\sigma = 0.18\). These values define a reproducible normalized quantum-sensing simulation rather than a device-specific calibration.
+where \(C\) is the measurement contrast and \(T_2^*\) is the dephasing time. Noisy measurements are generated using finite-shot binomial sampling and additive readout noise. The computational experiment used 4096 normalized samples, \(C = 0.86\), \(T_2^* = 60.0\), shot count \(N_s = 256\), normalized gyromagnetic coefficient \(\gamma = 2.0\), time step \(\Delta t = 0.01\), and an Ornstein–Uhlenbeck disturbance with \(\theta = 1.35\) and \(\sigma = 0.18\). These values define a reproducible normalized quantum-sensing simulation rather than a device-specific calibration.
 
 ## 3. Hybrid physics-calibrated recovery method
 
@@ -40,7 +40,7 @@ The method is physics-calibrated rather than purely physics-constrained. This di
 
 ## 4. Results and discussion
 
-The final experiment used 4096 simulated quantum magnetometer samples. The proposed hybrid physics-calibrated Bayesian PINN v3 achieved the best point-recovery performance among all tested methods.
+The final experiment used 4096 simulated quantum magnetometer samples. The proposed hybrid physics-calibrated ensemble PINN v3 achieved the best point-recovery performance among all tested methods.
 
 | Method | RMSE | MAE | Recovered SNR (dB) | 95% Coverage |
 |---|---:|---:|---:|---:|
