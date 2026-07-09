@@ -59,7 +59,9 @@ This microarticle presented a compact computational physics result for recoverin
 
 ## Data and code availability
 
-The simulation code, trained-recovery outputs, result tables, and generated figures are available in the public GitHub repository associated with this work.\n\n## References
+The simulation code, trained-recovery outputs, result tables, and generated figures are available in the public GitHub repository associated with this work.
+
+## References
 
 [1] W. Ding, X. Zhang, J. Liu, and X. Wang, “Quantum dynamic response-based NV-diamond magnetometry: Robustness to decoherence and applications in motion detection of magnetic nanoparticles,” arXiv:2307.05255, 2023.
 
