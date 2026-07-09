@@ -30,11 +30,17 @@ where \(B(t)\) is the hidden magnetic field and \(\gamma\) is the normalized gyr
 P(t) = \frac{1}{2}\left[1 - C e^{-t/T_2^*}\cos(\phi(t))\right],
 \]
 
-where \(C\) is the measurement contrast and \(T_2^*\) is the dephasing time. Noisy measurements are generated using finite-shot binomial sampling and additive readout noise. The computational experiment used 4096 normalized samples, \(C = 0.86\), \(T_2^* = 60.0\), shot count \(N_s = 256\), normalized gyromagnetic coefficient \(\gamma = 2.0\), time step \(\Delta t = 0.01\), and an Ornstein–Uhlenbeck disturbance with \(\theta = 1.35\) and \(\sigma = 0.18\). These values define a reproducible normalized quantum-sensing simulation rather than a device-specific calibration.
+where \(C\) is the measurement contrast and \(T_2^*\) is the dephasing time. Noisy measurements are generated using finite-shot binomial sampling and additive readout noise. The computational experiment used 4096 normalized samples, \(C = 0.86\), \(T_2^* = 60.0\), shot count \(N_s = 256\), normalized gyromagnetic coefficient \(\gamma = 2.0\), time step \(\Delta t = 0.01\), and an Ornstein–Uhlenbeck disturbance with \(\theta = 1.35\) and \(\sigma = 0.18\). These values define a reproducible normalized quantum-sensing simulation rather than a device-specific calibration. The reported results use a fixed random seed and a held-out evaluation set generated from the same physical simulation process.
 
 ## 3. Hybrid physics-calibrated recovery method
 
-The proposed method uses a two-stage recovery process. First, a supervised baseline neural estimator recovers the magnetic field from normalized time and noisy Ramsey probability. Second, a residual corrector receives the baseline magnetic-field estimate and the Ramsey probability residual. This corrector learns a small physics-calibrated adjustment to the baseline field estimate. An ensemble of residual correctors provides the mean estimate and an uncertainty band.
+The proposed method uses a two-stage recovery process. First, a supervised baseline neural estimator recovers the magnetic field from normalized time and noisy Ramsey probability. Second, a residual corrector receives the baseline magnetic-field estimate and the Ramsey probability residual. The hybrid estimate is written as
+
+\[
+\hat{B}_{\mathrm{hybrid}}(t) = \hat{B}_0(t) + f_{\theta}(\hat{B}_0(t), r_P(t)),
+\]
+
+where \(\hat{B}_0(t)\) is the baseline recovery, \(r_P(t)\) is the Ramsey probability residual, and \(f_{\theta}\) is the learned residual corrector. This corrector learns a small physics-calibrated adjustment to the baseline field estimate. An ensemble of residual correctors provides the mean estimate and an uncertainty band.
 
 The method is physics-calibrated rather than purely physics-constrained. This distinction is important because directly forcing a physics loss during training degraded point-recovery accuracy in preliminary experiments. The final method instead uses the Ramsey measurement residual as a correction signal, allowing the learned estimator to retain low error while improving physical consistency and uncertainty calibration. The uncertainty band should therefore be interpreted as ensemble-calibrated uncertainty, not as a full closed-form Bayesian posterior.
 
@@ -58,6 +64,16 @@ The main limitation is that the study is a normalized computational simulation r
 ## 5. Conclusion
 
 This microarticle presented a compact computational physics result for recovering a hidden magnetic-field trajectory from decohered Ramsey-type quantum magnetometer measurements. A hybrid physics-calibrated ensemble residual correction method achieved lower RMSE than neural and classical baselines while preserving approximately calibrated uncertainty. The result suggests that physics-calibrated residual learning is a useful strategy for inverse recovery in noisy quantum sensing simulations.
+
+## Figure captions
+
+**Figure 1.** Noisy Ramsey measurement probability generated from the decohered quantum magnetometer simulation.
+
+**Figure 2.** Comparison between true hidden magnetic-field trajectory and recovered trajectories from the tested methods.
+
+**Figure 3.** Ensemble uncertainty band for the proposed physics-calibrated recovery method.
+
+**Figure 4.** RMSE comparison showing the proposed hybrid method against neural, classical filtering, and direct inversion baselines.
 
 ## Data and code availability
 
