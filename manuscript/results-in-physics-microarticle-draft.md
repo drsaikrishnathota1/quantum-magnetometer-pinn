@@ -40,11 +40,11 @@ The method is physics-calibrated rather than purely physics-constrained. This di
 
 ## 4. Results and discussion
 
-The final experiment used 4096 simulated quantum magnetometer samples. The proposed hybrid physics-calibrated ensemble PINN v3 achieved the best point-recovery performance among all tested methods.
+The final experiment used 4096 simulated quantum magnetometer samples. The proposed hybrid physics-calibrated ensemble recovery method achieved the best point-recovery performance among all tested methods.
 
 | Method | RMSE | MAE | Recovered SNR (dB) | 95% Coverage |
 |---|---:|---:|---:|---:|
-| Hybrid Physics-Calibrated Ensemble PINN v3 | 0.2297 | 0.1795 | 5.5795 | 0.9534 |
+| Hybrid Physics-Calibrated Ensemble Recovery v3 | 0.2297 | 0.1795 | 5.5795 | 0.9534 |
 | Ablation Neural Estimator Without Physics Calibration | 0.2860 | 0.2242 | 3.6776 | — |
 | Standard Neural Network | 0.2882 | 0.2246 | 3.6104 | — |
 | Moving Average | 0.4945 | 0.3635 | -1.0793 | — |
