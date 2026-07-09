@@ -1,0 +1,36 @@
+Submission package for Results in Physics microarticle
+
+Title:
+Hybrid Physics-Calibrated Recovery of Decohered Quantum Magnetometer Signals Under Stochastic Magnetic Disturbance
+
+Author:
+Dr. Sai Krishna Thota
+Independent Researcher, USA
+drsaikrishnathota@ieee.org
+
+Article type:
+Microarticle / Computational physics article
+
+Main files:
+1. results-in-physics-microarticle-draft.docx
+2. cover-letter-results-in-physics.docx
+
+Figures:
+1. figure1_quantum_measurement_probability.png
+2. figure2_recovery_comparison.png
+3. figure3_uncertainty_band.png
+4. figure4_rmse_ablation.png
+
+Tables:
+1. baseline_comparison_metrics.csv
+2. neural_recovery_metrics.csv
+
+Main reported result:
+Hybrid Physics-Calibrated Bayesian PINN v3
+RMSE = 0.2297
+MAE = 0.1795
+Recovered SNR = 5.5795 dB
+95% coverage = 0.9534
+
+Scope note:
+This is a computational physics microarticle focused on quantum magnetometer signal recovery, Ramsey measurement probability, decoherence, stochastic magnetic disturbance, and uncertainty-calibrated inverse recovery.
