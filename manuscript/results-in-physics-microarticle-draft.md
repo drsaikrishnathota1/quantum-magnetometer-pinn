@@ -63,19 +63,11 @@ The simulation code, trained-recovery outputs, result tables, and generated figu
 
 ## References
 
-[1] W. Ding, X. Zhang, J. Liu, and X. Wang, “Quantum dynamic response-based NV-diamond magnetometry: Robustness to decoherence and applications in motion detection of magnetic nanoparticles,” arXiv:2307.05255, 2023.
+[1] J. Jeon, Y. Kim, Y. Ito, N. Sugita, and M. Mitsuishi, “One-frame interferometric surface contouring via stepwise phase extraction and deep learning,” Results in Physics, Article 108560, 2025. doi:10.1016/j.rinp.2025.108560.
 
-[2] J. Amoros-Binefa and J. Kolodynski, “Noisy atomic magnetometry with Kalman filtering and measurement-based feedback,” arXiv:2403.14764, 2024.
+[2] G. Ramasekhar, M. Jawad, S. Jakeer, S. R. Reddisekhar Reddy, and S. Kamangar, “Machine learning approach for predicting heat and mass transfer in Maxwell–Sutterby fluid flow over a Riga plate geometry via Levenberg–Marquardt backpropagation neural network algorithm: Influence of joule heating and activation energy,” Results in Physics, Article 108528, 2025. doi:10.1016/j.rinp.2025.108528.
 
-[3] J. Tian, R. S. Said, F. Jelezko, J. Cai, and L. Xiao, “Bayesian-based hybrid method for rapid optimization of NV center sensors,” arXiv:2302.08410, 2023.
+[3] B. Roumi and V. Fallahi, “Tunable dual-phase TMOKE sensor in a Weyl semimetal–plasmonic waveguide,” Results in Physics, Article 108571, 2025. doi:10.1016/j.rinp.2025.108571.
 
-[4] F. Belliardo, F. Zoratti, and V. Giovannetti, “Applications of model-aware reinforcement learning in Bayesian quantum metrology,” arXiv:2403.05706, 2024.
+[4] L. Guo, Y. Takashima, M. Kuriki, and M. Yamamoto, “Systematic optimization of Cs-Sb-O activated NEA GaAs photocathodes for long-lived accelerator electron sources,” Results in Physics, Article 108552, 2025. doi:10.1016/j.rinp.2025.108552.
 
-[5] K.-H. Cheng, Z. Kazi, J. Rovny, B. Zhang, L. Nassar, J. D. Thompson, and N. P. de Leon, “Massively multiplexed nanoscale magnetometry with diamond quantum sensors,” arXiv:2408.11666, 2024.
-
-[6] A. Youssry, S. Todd, P. Murton, M. J. Arshad, A. Peruzzo, and C. Bonato, “Bayesian quantum sensing using graybox machine learning,” arXiv:2601.17465, 2026.
-
-[7] W. Zhou and Y. F. Xu, “Data-Guided Physics-Informed Neural Networks for Solving Inverse Problems in Partial Differential Equations,” arXiv:2407.10836, 2024.
-
-[8] E. W. Steele, D. R. Reising, and T. Li, “Recovery of Quantum Correlations using Machine Learning,” arXiv:2410.02818, 2024.
-\n
