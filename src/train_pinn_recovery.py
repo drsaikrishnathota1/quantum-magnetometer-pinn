@@ -2,36 +2,43 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
-from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-from config import SEED, RAW_DIR, PROCESSED_DIR, TABLES_DIR, DT, GAMMA
+from config import (
+    SEED, RAW_DIR, PROCESSED_DIR, TABLES_DIR,
+    DT, GAMMA, CONTRAST, T2_STAR, OU_THETA,
+    EPOCHS_STANDARD_NN, EPOCHS_PINN, ENSEMBLE_SIZE,
+    LAMBDA_OBS, LAMBDA_PHASE, LAMBDA_SMOOTH, LAMBDA_OU
+)
 
-torch.manual_seed(SEED)
-np.random.seed(SEED)
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 class StandardNN(nn.Module):
-    def __init__(self):
+    def __init__(self, width=96):
         super().__init__()
         self.net = nn.Sequential(
-            nn.Linear(2, 64),
-            nn.Tanh(),
-            nn.Linear(64, 64),
-            nn.Tanh(),
-            nn.Linear(64, 1)
+            nn.Linear(2, width),
+            nn.SiLU(),
+            nn.Linear(width, width),
+            nn.SiLU(),
+            nn.Linear(width, width),
+            nn.SiLU(),
+            nn.Linear(width, 1)
         )
 
     def forward(self, x):
         return self.net(x)
 
-class PINN(nn.Module):
-    def __init__(self):
+class QuantumPINN(nn.Module):
+    def __init__(self, width=96):
         super().__init__()
         self.net = nn.Sequential(
-            nn.Linear(2, 64),
-            nn.Tanh(),
-            nn.Linear(64, 64),
-            nn.Tanh(),
-            nn.Linear(64, 2)
+            nn.Linear(2, width),
+            nn.SiLU(),
+            nn.Linear(width, width),
+            nn.SiLU(),
+            nn.Linear(width, width),
+            nn.SiLU(),
+            nn.Linear(width, 2)
         )
 
     def forward(self, x):
@@ -40,108 +47,166 @@ class PINN(nn.Module):
         phi_hat = out[:, 1:2]
         return b_hat, phi_hat
 
-def train_standard_nn(x, y, epochs=1200):
-    model = StandardNN()
-    opt = torch.optim.Adam(model.parameters(), lr=1e-3)
+def make_inputs(df):
+    t = df["t"].values.astype(np.float32)
+    p = df["P_noisy"].values.astype(np.float32)
+
+    t_norm = 2.0 * (t - t.min()) / (t.max() - t.min()) - 1.0
+    x = np.stack([t_norm, p], axis=1)
+
+    return (
+        torch.tensor(x, dtype=torch.float32, device=DEVICE),
+        torch.tensor(t, dtype=torch.float32, device=DEVICE).reshape(-1, 1),
+        torch.tensor(p, dtype=torch.float32, device=DEVICE).reshape(-1, 1),
+    )
+
+def train_standard_nn(x, b_true, seed):
+    torch.manual_seed(seed)
+    model = StandardNN().to(DEVICE)
+    opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-5)
     loss_fn = nn.MSELoss()
 
-    for epoch in range(epochs):
+    for epoch in range(EPOCHS_STANDARD_NN):
         opt.zero_grad()
         pred = model(x)
-        loss = loss_fn(pred, y)
+        loss = loss_fn(pred, b_true)
         loss.backward()
         opt.step()
 
-        if epoch % 300 == 0:
+        if epoch % 400 == 0:
             print(f"Standard NN epoch {epoch}, loss={loss.item():.6f}")
 
     return model
 
-def train_pinn(x, y_b, y_p, epochs=1800, lambda_phys=0.35):
-    model = PINN()
-    opt = torch.optim.Adam(model.parameters(), lr=1e-3)
-    mse = nn.MSELoss()
+def pinn_loss(model, x, t_raw, p_obs, b_true, use_physics=True):
+    b_hat, phi_hat = model(x)
 
-    for epoch in range(epochs):
+    envelope = CONTRAST * torch.exp(-t_raw / T2_STAR)
+    p_hat = 0.5 * (1.0 - envelope * torch.cos(phi_hat))
+
+    supervised_loss = torch.mean((b_hat - b_true) ** 2)
+    obs_loss = torch.mean((p_hat - p_obs) ** 2)
+
+    if not use_physics:
+        return supervised_loss + LAMBDA_OBS * obs_loss
+
+    dphi_dt = (phi_hat[1:] - phi_hat[:-1]) / DT
+    b_mid = b_hat[:-1]
+    phase_loss = torch.mean((dphi_dt - GAMMA * b_mid) ** 2)
+
+    db_dt = (b_hat[1:] - b_hat[:-1]) / DT
+    b_centered = b_hat[:-1] - torch.mean(b_hat[:-1])
+    ou_loss = torch.mean((db_dt + OU_THETA * b_centered) ** 2)
+
+    d2b = b_hat[2:] - 2 * b_hat[1:-1] + b_hat[:-2]
+    smooth_loss = torch.mean(d2b ** 2)
+
+    total = (
+        supervised_loss
+        + LAMBDA_OBS * obs_loss
+        + LAMBDA_PHASE * phase_loss
+        + LAMBDA_SMOOTH * smooth_loss
+        + LAMBDA_OU * ou_loss
+    )
+
+    return total
+
+def train_pinn(x, t_raw, p_obs, b_true, seed, use_physics=True):
+    torch.manual_seed(seed)
+    model = QuantumPINN().to(DEVICE)
+    opt = torch.optim.AdamW(model.parameters(), lr=8e-4, weight_decay=1e-5)
+
+    for epoch in range(EPOCHS_PINN):
         opt.zero_grad()
-
-        b_hat, phi_hat = model(x)
-
-        p_hat = 0.5 * (1 - torch.cos(phi_hat))
-
-        data_loss = mse(b_hat, y_b) + mse(p_hat, y_p)
-
-        dphi = phi_hat[1:] - phi_hat[:-1]
-        b_mid = b_hat[:-1]
-        physics_residual = dphi / DT - GAMMA * b_mid
-        physics_loss = torch.mean(physics_residual ** 2)
-
-        loss = data_loss + lambda_phys * physics_loss
-
+        loss = pinn_loss(model, x, t_raw, p_obs, b_true, use_physics=use_physics)
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
 
-        if epoch % 300 == 0:
-            print(
-                f"PINN epoch {epoch}, total={loss.item():.6f}, "
-                f"data={data_loss.item():.6f}, physics={physics_loss.item():.6f}"
-            )
+        if epoch % 400 == 0:
+            label = "PINN" if use_physics else "Ablation PINN no-physics"
+            print(f"{label} seed={seed}, epoch={epoch}, loss={loss.item():.6f}")
 
     return model
 
+def evaluate(y_true, y_pred):
+    rmse = np.sqrt(mean_squared_error(y_true, y_pred))
+    mae = mean_absolute_error(y_true, y_pred)
+    signal_power = np.mean(y_true ** 2)
+    noise_power = np.mean((y_true - y_pred) ** 2)
+    snr_db = 10 * np.log10(signal_power / max(noise_power, 1e-12))
+    return rmse, mae, snr_db
+
 def main():
+    print(f"Using device: {DEVICE}")
+
     df = pd.read_csv(RAW_DIR / "quantum_magnetometer_data.csv")
+    x, t_raw, p_obs = make_inputs(df)
 
-    features = df[["t", "P_noisy"]].values
-    target_b = df[["B_disturbed"]].values
-    target_p = df[["P_noisy"]].values
-
-    scaler_x = StandardScaler()
-    scaler_y = StandardScaler()
-
-    x_scaled = scaler_x.fit_transform(features)
-    y_scaled = scaler_y.fit_transform(target_b)
-
-    x = torch.tensor(x_scaled, dtype=torch.float32)
-    y_b = torch.tensor(y_scaled, dtype=torch.float32)
-    y_p = torch.tensor(target_p, dtype=torch.float32)
+    b_np = df["B_total"].values.astype(np.float32)
+    b_true = torch.tensor(b_np, dtype=torch.float32, device=DEVICE).reshape(-1, 1)
 
     print("Training standard neural network baseline...")
-    standard_model = train_standard_nn(x, y_b)
+    nn_model = train_standard_nn(x, b_true, SEED)
 
-    print("Training physics-informed neural network...")
-    pinn_model = train_pinn(x, y_b, y_p)
+    print("Training ablation PINN without physics constraints...")
+    ablation_model = train_pinn(x, t_raw, p_obs, b_true, SEED + 10, use_physics=False)
+
+    print("Training Bayesian/ensemble physics-informed PINN...")
+    ensemble_preds = []
+    phi_preds = []
+
+    for k in range(ENSEMBLE_SIZE):
+        model = train_pinn(x, t_raw, p_obs, b_true, SEED + 100 + k, use_physics=True)
+        with torch.no_grad():
+            b_hat, phi_hat = model(x)
+            ensemble_preds.append(b_hat.detach().cpu().numpy().reshape(-1))
+            phi_preds.append(phi_hat.detach().cpu().numpy().reshape(-1))
 
     with torch.no_grad():
-        nn_scaled = standard_model(x).numpy()
-        pinn_scaled, phi_hat = pinn_model(x)
-        pinn_scaled = pinn_scaled.numpy()
-        phi_hat = phi_hat.numpy().reshape(-1)
+        nn_pred = nn_model(x).detach().cpu().numpy().reshape(-1)
+        ab_b, ab_phi = ablation_model(x)
+        ab_pred = ab_b.detach().cpu().numpy().reshape(-1)
+        ab_phi = ab_phi.detach().cpu().numpy().reshape(-1)
 
-    nn_pred = scaler_y.inverse_transform(nn_scaled).reshape(-1)
-    pinn_pred = scaler_y.inverse_transform(pinn_scaled).reshape(-1)
+    ensemble_preds = np.stack(ensemble_preds, axis=0)
+    phi_preds = np.stack(phi_preds, axis=0)
+
+    pinn_mean = ensemble_preds.mean(axis=0)
+    pinn_std = ensemble_preds.std(axis=0)
+    phi_mean = phi_preds.mean(axis=0)
 
     df["NN_recovered"] = nn_pred
-    df["PINN_recovered"] = pinn_pred
-    df["PINN_phi_hat"] = phi_hat
+    df["Ablation_PINN_recovered"] = ab_pred
+    df["Bayesian_PINN_mean"] = pinn_mean
+    df["Bayesian_PINN_std"] = pinn_std
+    df["Bayesian_PINN_phi"] = phi_mean
+
+    lower = pinn_mean - 1.96 * pinn_std
+    upper = pinn_mean + 1.96 * pinn_std
+    coverage = np.mean((b_np >= lower) & (b_np <= upper))
+
+    methods = [
+        ("Standard Neural Network", nn_pred, np.nan),
+        ("Ablation PINN Without Physics", ab_pred, np.nan),
+        ("Bayesian Physics-Informed PINN", pinn_mean, coverage),
+    ]
+
+    rows = []
+    for name, pred, cov in methods:
+        rmse, mae, snr_db = evaluate(b_np, pred)
+        rows.append({
+            "Method": name,
+            "RMSE": rmse,
+            "MAE": mae,
+            "Recovered_SNR_dB": snr_db,
+            "Coverage_95": cov
+        })
 
     out_path = PROCESSED_DIR / "pinn_recovery_results.csv"
     df.to_csv(out_path, index=False)
 
-    metrics = []
-    for name, pred in [
-        ("Standard Neural Network", nn_pred),
-        ("Physics-Informed Neural Network", pinn_pred)
-    ]:
-        rmse = np.sqrt(mean_squared_error(df["B_disturbed"], pred))
-        mae = mean_absolute_error(df["B_disturbed"], pred)
-        metrics.append({
-            "Method": name,
-            "RMSE": rmse,
-            "MAE": mae
-        })
-
-    metrics_df = pd.DataFrame(metrics)
+    metrics_df = pd.DataFrame(rows)
     metrics_path = TABLES_DIR / "neural_recovery_metrics.csv"
     metrics_df.to_csv(metrics_path, index=False)
 

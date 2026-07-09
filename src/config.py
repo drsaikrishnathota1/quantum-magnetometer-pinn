@@ -13,8 +13,27 @@ TABLES_DIR = RESULTS_DIR / "tables"
 for path in [RAW_DIR, PROCESSED_DIR, FIGURES_DIR, TABLES_DIR]:
     path.mkdir(parents=True, exist_ok=True)
 
-# Normalized quantum sensor simulation parameters
-N_SAMPLES = 2500
+# Normalized computational physics simulation
+N_SAMPLES = 4096
 DT = 0.01
-GAMMA = 2.0  # normalized gyromagnetic scaling factor
-SHOT_COUNT = 200
+GAMMA = 2.0
+
+# Ramsey quantum magnetometer parameters
+SHOT_COUNT = 256
+CONTRAST = 0.86
+T2_STAR = 60.0
+
+# Stochastic magnetic disturbance: Ornstein-Uhlenbeck process
+OU_THETA = 1.35
+OU_SIGMA = 0.18
+
+# Training settings
+EPOCHS_STANDARD_NN = 1200
+EPOCHS_PINN = 1600
+ENSEMBLE_SIZE = 5
+
+# Loss weights
+LAMBDA_OBS = 0.35
+LAMBDA_PHASE = 0.65
+LAMBDA_SMOOTH = 0.025
+LAMBDA_OU = 0.015
