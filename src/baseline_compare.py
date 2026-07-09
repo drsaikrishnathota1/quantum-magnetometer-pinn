@@ -51,7 +51,7 @@ def main():
         "Kalman Filter": kalman,
         "Standard Neural Network": df["NN_recovered"].values,
         "Ablation PINN Without Physics": df["Ablation_PINN_recovered"].values,
-        "Bayesian Physics-Informed PINN": df["Bayesian_PINN_mean"].values,
+        "Hybrid Physics-Calibrated Bayesian PINN v3": df["Bayesian_PINN_mean"].values,
     }
 
     rows = []
@@ -60,7 +60,7 @@ def main():
         rmse, mae, snr_db = evaluate(b_true, pred)
 
         coverage = np.nan
-        if name == "Bayesian Physics-Informed PINN":
+        if name == "Hybrid Physics-Calibrated Bayesian PINN v3":
             std = df["Bayesian_PINN_std"].values
             lower = pred - 1.96 * std
             upper = pred + 1.96 * std
