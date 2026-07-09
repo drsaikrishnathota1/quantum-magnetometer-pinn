@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+
+# Data
+data/raw/*.csv
+data/raw/*.npy
+data/processed/*.csv
+data/processed/*.npy
+
+# Results
+results/figures/*.png
+results/figures/*.pdf
+results/tables/*.csv
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
