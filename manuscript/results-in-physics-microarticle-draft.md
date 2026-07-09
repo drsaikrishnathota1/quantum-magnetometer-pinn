@@ -59,8 +59,21 @@ This microarticle presented a compact computational physics result for recoverin
 
 ## Data and code availability
 
-The simulation code, trained-recovery outputs, result tables, and generated figures are available in the public GitHub repository associated with this work.
+The simulation code, trained-recovery outputs, result tables, and generated figures are available in the public GitHub repository associated with this work.\n\n## References
 
-## References
+[1] W. Ding, X. Zhang, J. Liu, and X. Wang, “Quantum dynamic response-based NV-diamond magnetometry: Robustness to decoherence and applications in motion detection of magnetic nanoparticles,” arXiv:2307.05255, 2023.
 
-[To be limited to 8–12 recent references, preferably 2023–2026, with only directly relevant Results in Physics papers included.]
+[2] J. Amoros-Binefa and J. Kolodynski, “Noisy atomic magnetometry with Kalman filtering and measurement-based feedback,” arXiv:2403.14764, 2024.
+
+[3] J. Tian, R. S. Said, F. Jelezko, J. Cai, and L. Xiao, “Bayesian-based hybrid method for rapid optimization of NV center sensors,” arXiv:2302.08410, 2023.
+
+[4] F. Belliardo, F. Zoratti, and V. Giovannetti, “Applications of model-aware reinforcement learning in Bayesian quantum metrology,” arXiv:2403.05706, 2024.
+
+[5] K.-H. Cheng, Z. Kazi, J. Rovny, B. Zhang, L. Nassar, J. D. Thompson, and N. P. de Leon, “Massively multiplexed nanoscale magnetometry with diamond quantum sensors,” arXiv:2408.11666, 2024.
+
+[6] A. Youssry, S. Todd, P. Murton, M. J. Arshad, A. Peruzzo, and C. Bonato, “Bayesian quantum sensing using graybox machine learning,” arXiv:2601.17465, 2026.
+
+[7] W. Zhou and Y. F. Xu, “Data-Guided Physics-Informed Neural Networks for Solving Inverse Problems in Partial Differential Equations,” arXiv:2407.10836, 2024.
+
+[8] E. W. Steele, D. R. Reising, and T. Li, “Recovery of Quantum Correlations using Machine Learning,” arXiv:2410.02818, 2024.
+\n
