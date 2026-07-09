@@ -1,0 +1,17 @@
+Dear Editor,
+
+Please consider the enclosed microarticle, “Hybrid Physics-Calibrated Recovery of Decohered Quantum Magnetometer Signals Under Stochastic Magnetic Disturbance,” for publication in Results in Physics.
+
+This submission is framed as a computational physics microarticle. Its central contribution is a compact numerical result for inverse recovery of a decohered quantum magnetometer signal using the Ramsey measurement probability and stochastic magnetic-field dynamics as the governing physical model. The work focuses on quantum magnetometry, decoherence, stochastic magnetic disturbance, inverse signal recovery, and uncertainty-calibrated computational modeling.
+
+The manuscript reports that a hybrid physics-calibrated Bayesian residual correction method improves magnetic-field recovery from noisy Ramsey-type measurements compared with direct probability inversion, moving-average filtering, Kalman filtering, a standard neural network, and an ablation PINN without physics calibration. The final method achieved RMSE = 0.2297, MAE = 0.1795, recovered SNR = 5.5795 dB, and 95% uncertainty coverage = 0.9534 in the reported simulation.
+
+The manuscript is intentionally concise and is submitted as a microarticle because it presents a focused computational physics result rather than a broad engineering system or application paper. The code, processed results, figures, and tables are available in the associated public repository.
+
+Thank you for your time and consideration.
+
+Sincerely,
+
+Dr. Sai Krishna Thota  
+Independent Researcher, USA  
+drsaikrishnathota@ieee.org
