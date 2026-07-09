@@ -63,11 +63,9 @@ The simulation code, trained-recovery outputs, result tables, and generated figu
 
 ## References
 
-[1] J. Jeon, Y. Kim, Y. Ito, N. Sugita, and M. Mitsuishi, “One-frame interferometric surface contouring via stepwise phase extraction and deep learning,” Results in Physics, Article 108560, 2025. doi:10.1016/j.rinp.2025.108560.
+[1] J. Jeon, Y. Kim, Y. Ito, N. Sugita, and M. Mitsuishi, “One-frame interferometric surface contouring via stepwise phase extraction and deep learning,” Results in Physics, vol. 80, Article 108560, 2026. doi:10.1016/j.rinp.2025.108560.
 
-[2] G. Ramasekhar, M. Jawad, S. Jakeer, S. R. Reddisekhar Reddy, and S. Kamangar, “Machine learning approach for predicting heat and mass transfer in Maxwell–Sutterby fluid flow over a Riga plate geometry via Levenberg–Marquardt backpropagation neural network algorithm: Influence of joule heating and activation energy,” Results in Physics, Article 108528, 2025. doi:10.1016/j.rinp.2025.108528.
+[2] G. Ramasekhar et al., “Machine learning approach for predicting heat and mass transfer in Maxwell–Sutterby fluid flow over a Riga plate geometry via Levenberg–Marquardt backpropagation neural network algorithm: Influence of Joule heating and activation energy,” Results in Physics, vol. 80, Article 108528, 2026. doi:10.1016/j.rinp.2025.108528.
 
-[3] B. Roumi and V. Fallahi, “Tunable dual-phase TMOKE sensor in a Weyl semimetal–plasmonic waveguide,” Results in Physics, Article 108571, 2025. doi:10.1016/j.rinp.2025.108571.
-
-[4] L. Guo, Y. Takashima, M. Kuriki, and M. Yamamoto, “Systematic optimization of Cs-Sb-O activated NEA GaAs photocathodes for long-lived accelerator electron sources,” Results in Physics, Article 108552, 2025. doi:10.1016/j.rinp.2025.108552.
+[3] B. Roumi and V. Fallahi, “Tunable dual-phase TMOKE sensor in a Weyl semimetal–plasmonic waveguide,” Results in Physics, vol. 80, Article 108571, 2026. doi:10.1016/j.rinp.2025.108571.
 
